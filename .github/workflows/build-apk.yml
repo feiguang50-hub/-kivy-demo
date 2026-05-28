@@ -23,9 +23,14 @@ jobs:
           pip install --upgrade pip
           pip install cython buildozer
 
+      - name: Accept Android licenses
+        run: |
+          yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses 2>/dev/null || true
+          yes | /usr/lib/jvm/java-17-openjdk-amd64/bin/sdkmanager --licenses 2>/dev/null || true
+
       - name: Build with Buildozer
         run: |
-          buildozer android debug
+          yes | buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
