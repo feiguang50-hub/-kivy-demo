@@ -23,17 +23,6 @@ jobs:
           pip install --upgrade pip
           pip install cython buildozer
 
-      - name: Install Android SDK
-        run: |
-          sudo apt install -y wget unzip
-          mkdir -p /home/runner/.buildozer/android/platform
-          cd /home/runner/.buildozer/android/platform
-          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
-          unzip -q commandlinetools-linux-11076708_latest.zip
-          mkdir -p android-sdk/cmdline-tools
-          mv cmdline-tools android-sdk/cmdline-tools/latest
-          echo "ANDROID_HOME=/home/runner/.buildozer/android/platform/android-sdk" >> $GITHUB_ENV
-
       - name: Build with Buildozer
         run: |
           buildozer android debug
