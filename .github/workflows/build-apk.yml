@@ -30,9 +30,12 @@ jobs:
 
       - name: Fix autoconf for libffi
         run: |
+          sudo apt update
           sudo apt install -y libtool libtool-bin autoconf automake m4 autopoint pkg-config gettext
-          export ACLOCAL_PATH=/usr/share/aclocal
-          sudo bash -c 'libtoolize --force --copy --install; aclocal; autoconf --force' || true
+          which libtoolize || dpkg -L libtool-bin | grep bin
+          sudo /usr/bin/libtoolize --force --copy --install || true
+          sudo aclocal || true
+          sudo autoconf --force || true
 
       - name: Build with Buildozer
         run: |
