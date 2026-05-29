@@ -28,6 +28,14 @@ jobs:
           yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses 2>/dev/null || true
           yes | /usr/lib/jvm/java-17-openjdk-amd64/bin/sdkmanager --licenses 2>/dev/null || true
 
+      - name: Fix encoding
+        run: |
+          file buildozer.spec
+          head -5 buildozer.spec | xxd | head -5
+          python3 -c "open('buildozer.spec', encoding='utf-8').read(); print('ok')"
+          export LANG=en_US.UTF-8
+          export LC_ALL=en_US.UTF-8
+
       - name: Build with Buildozer
         run: |
           yes | buildozer android debug
