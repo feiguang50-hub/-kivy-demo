@@ -19,7 +19,7 @@ jobs:
       - name: Install Buildozer deps
         run: |
           sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool libtool-bin pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev autopoint
           pip install --upgrade pip
           pip install cython buildozer
 
@@ -27,14 +27,6 @@ jobs:
         run: |
           yes | $HOME/.buildozer/android/platform/android-sdk/tools/bin/sdkmanager --licenses 2>/dev/null || true
           yes | /usr/lib/jvm/java-17-openjdk-amd64/bin/sdkmanager --licenses 2>/dev/null || true
-
-      - name: Fix encoding
-        run: |
-          file buildozer.spec
-          head -5 buildozer.spec | xxd | head -5
-          python3 -c "open('buildozer.spec', encoding='utf-8').read(); print('ok')"
-          export LANG=en_US.UTF-8
-          export LC_ALL=en_US.UTF-8
 
       - name: Build with Buildozer
         run: |
