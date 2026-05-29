@@ -30,9 +30,10 @@ jobs:
 
       - name: Fix autoconf for libffi
         run: |
-          sudo apt install -y libtool libtool-bin autoconf automake m4 autopoint
-          libtoolize --version
-          autoreconf --version
+          sudo apt install -y libtool libtool-bin autoconf automake m4 autopoint pkg-config
+          sudo libtoolize --force --copy --install || true
+          sudo aclocal || true
+          sudo autoconf --force || true
 
       - name: Build with Buildozer
         run: |
